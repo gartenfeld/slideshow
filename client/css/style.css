@@ -1,0 +1,55 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  margin: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #000;
+  padding: 25% 0 10% 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.stage {
+  margin-top: 50px;
+  color: #fff;
+  text-align: center;
+}
+
+.word-container {
+  position: relative;
+  margin: 20px;
+}
+
+.article, .word {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.article {
+  font-size: 200%;
+  margin: 0 20px 0 20px;
+}
+
+.word {
+  font-size: 300%;
+  font-weight: 700;
+}
+
+.gloss {
+  color: #ccc;
+}
