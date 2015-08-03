@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "HOME=$HOME/app-root/runtime bower install",
-    "start": "node ./server/app.js"
+    "start": "node ./server/app.js",
+    "postinstall": "export HOME=$HOME/app-root/runtime/repo; ./node_modules/bower/bin/bower install"
   },
   "main": "./server/app.js",
   "dependencies": {
