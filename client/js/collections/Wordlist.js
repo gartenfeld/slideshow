@@ -4,18 +4,14 @@ var Wordlist = Backbone.Collection.extend({
 
   initialize: function() {
     this.cursor = 0;
-    this.loops = 3;
-    this.interval = 500;
+    this.loops = 1;
+    this.interval = 0;
+    this.init = true;
     // load initial words
     if (this.size() === 0) {
       this.fetchWords(this.cursor);
     }
     this.on('check', this.checkStatus, this);
-    // kick off the playlist
-
-    this.on('add', function(){
-      this.at(this.cursor).play();
-    }.bind(this));
   },
 
   fetchWords: function(pos) {
@@ -38,17 +34,21 @@ var Wordlist = Backbone.Collection.extend({
         f: word.f
       });
     });
+    if (this.init) {
+      this.init = false;
+      this.playCurrent();
+    }
   },
 
   checkStatus: function(){
     var current = this.at(this.cursor),
         count = current.get('count');
     if (count < this.loops) {
-      this.playCurrent();
+      // wait for the interval to elapse, then play again
+      _.delay(this.playCurrent.bind(this), this.interval);
     } else {
       current.set('count', 0);
-      // wait for the interval to elapse, then play again
-      _.delay(this.next, this.interval);
+      this.next();
     }
   },
 
@@ -67,6 +67,7 @@ var Wordlist = Backbone.Collection.extend({
 
   playCurrent: function() {
     soundManager.stopAll();
+    this.trigger('play');
     this.at(this.cursor).play();
   },
 
