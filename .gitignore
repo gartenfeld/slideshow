@@ -1,4 +1,5 @@
 .DS_Store
 node_modules
+client/audio/lextra
 client/lib/*
 !client/lib/soundmanager

@@ -10,7 +10,7 @@
   <div class="screen">
     <div class="stage">
 
-      <div class="word-container clearfix">
+      <div class="word-container">
         <div class="article">
           die
         </div>
@@ -23,8 +23,13 @@
       </div>
 
     </div>
-    <div class="controls">
-      
+    <div id="controls">
+      <a href="#" class="previous">PREV</a>
+      <a href="#" class="next">NEXT</a>
+      <a href="#" class="loop-plus">LOOP+</a>
+      <a href="#" class="loop-minus">LOOP-</a>
+      <a href="#" class="interval-plus">INT+</a>
+      <a href="#" class="interval-minus">INT-</a>
     </div>
   </div>
 
@@ -32,10 +37,13 @@
   <script src="lib/underscore/underscore-min.js"></script>
   <script src="lib/backbone/backbone-min.js"></script>
   <script src="lib/soundmanager/soundmanager2-min.js"></script>
-  <script>
-    $(function(){
+  <script src="js/models/Word.js"></script>
+  <script src="js/collections/Wordlist.js"></script>
+  <script src="js/views/AppView.js"></script>
+  <script src="js/init.js"></script>
 
-    });
+  <script>
+
   </script>
 </body>
 </html>
