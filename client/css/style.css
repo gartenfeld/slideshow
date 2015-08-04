@@ -20,12 +20,12 @@ html, body {
   height: 100%;
   position: fixed;
   background-color: #000;
-  padding: 25% 0 10% 0;
+  padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
 
 .stage {
-  margin-top: 50px;
+  margin-top: 30vh;
   color: #fff;
   text-align: center;
 }
