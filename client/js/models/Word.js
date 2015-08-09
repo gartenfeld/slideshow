@@ -14,10 +14,14 @@ var Word = Backbone.Model.extend({
     soundManager.createSound({
       id: this.get('f'),
       url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3",
-      autoLoad: true,
+      autoLoad: false,
+      stream: true, 
+      whileloading: function() { 
+        document.title = "Loading " + this.id; 
+      },
       autoPlay: false,
       onload: function() {
-        //
+        document.title = "Slideshow"; 
       },
       volume: 75
     });
@@ -26,7 +30,7 @@ var Word = Backbone.Model.extend({
 
   play: function() {
     var sound = this;
-    console.log("Playing: ", sound.get('f'));
+    // console.log("Playing: ", sound.get('f'));
     soundManager.play(sound.get('f'), {
       onfinish: function(){
         sound.set('count', sound.get('count') + 1);

@@ -6,7 +6,9 @@ var AppView = Backbone.View.extend({
     'click .previous': 'previous',
     'click .next': 'next',
     'click .loop-plus': 'more',
-    'click .loop-minus': 'less'
+    'click .loop-minus': 'less',
+    'click .interval-plus': 'slower',
+    'click .interval-minus': 'faster'
   },
 
   initialize: function() {
@@ -30,6 +32,18 @@ var AppView = Backbone.View.extend({
   less: function () { 
     if (this.collection.loops > 2) {
       this.collection.loops--;
+    }
+  },
+
+  slower: function () { 
+    if (this.collection.interval < 3000) {
+      this.collection.interval += 500;
+    }
+  },
+
+  faster: function () { 
+    if (this.collection.interval > 0) {
+      this.collection.interval -= 500;
     }
   },
 
