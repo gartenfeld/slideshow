@@ -13,11 +13,11 @@ var Word = Backbone.Model.extend({
     soundManager.createSound({
       id: this.get('f'),
       url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3",
-      autoLoad: true,
+      autoLoad: false,
       autoPlay: false,
-      stream: false, 
+      stream: true, 
       volume: 80
-    }).load();
+    });
   },
 
   play: function() {
