@@ -56,12 +56,8 @@ var AppView = Backbone.View.extend({
     this.$el.find('#article').text(article);
     this.$el.find('.gloss').text(gloss);
     this.$el.find('.word').text(word)
-      .css({
-        opacity: 0,
-      })
-      .animate({
-        opacity: 1,
-      }, 250);
+      .css({ opacity: 0 })
+      .animate({ opacity: 1 }, 250);
   }
 
 });

@@ -5,10 +5,8 @@ soundManager.setup({
   flashVersion: 9,
   preferFlash: false,
   onready: function() {
-    new AppView({ collection: new Wordlist() });
+    $(function(){
+      new AppView({ collection: new Wordlist() });
+    });
   }
-});
-
-$(function(){
-
 });

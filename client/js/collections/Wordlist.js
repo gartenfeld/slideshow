@@ -8,23 +8,20 @@ var Wordlist = Backbone.Collection.extend({
     this.interval = 0;
     this.init = true;
     this.on('check', this.checkStatus, this);
-    if (this.size() === 0) {
-      this.fetchWords(this.cursor);
-    }
+    this.fetchWords(this.cursor);
   },
 
   fetchWords: function(pos) {
-    $.get(
-      '/api/' + pos,
-      function (data) {
-        this.addWords(data.words);
-      }.bind(this)
-    );
+    var list = this;
+    $.get('/api/' + pos)
+    .done(function (data) {
+      list.addWords(data.words);
+    });
   },
 
   addWords: function(words) {
     var list = this;
-    _(words).each(function (word) {
+    _(words).each(function(word) {
       list.add({
         a: word.a,
         de: word.de,
@@ -32,11 +29,10 @@ var Wordlist = Backbone.Collection.extend({
         f: word.f
       });
     });
-    if (this.init === true) {
-      this.init = false;
-      this.playCurrent();
+    if (list.init) {
+      list.init = false;
+      list.playCurrent();
     }
-    // console.log("Words: ", this.models.length);
   },
 
   checkStatus: function(){
@@ -55,10 +51,9 @@ var Wordlist = Backbone.Collection.extend({
       this.cursor = this.size();
     }
     this.cursor = (this.cursor + offset) % this.size();
-    // console.log(this.cursor);
     // load more words when approaching the end of the list
     if (this.cursor > this.size() - 4) {
-      this.fetchWords(this.size() + 1);
+      this.fetchWords(this.size());
     }
   },
 
