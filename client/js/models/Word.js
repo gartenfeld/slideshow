@@ -13,7 +13,7 @@ var Word = Backbone.Model.extend({
     soundManager.createSound({
       id: this.get('f'),
       url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3",
-      autoLoad: false,
+      autoLoad: true,
       autoPlay: false,
       stream: false, 
       volume: 80

@@ -37,7 +37,7 @@ var Wordlist = Backbone.Collection.extend({
       this.init = false;
       this.playCurrent();
     }
-    console.log("Words: ", this.models.length);
+    // console.log("Words: ", this.models.length);
   },
 
   checkStatus: function(){
@@ -56,7 +56,7 @@ var Wordlist = Backbone.Collection.extend({
       this.cursor = this.size();
     }
     this.cursor = (this.cursor + offset) % this.size();
-    console.log(this.cursor);
+    // console.log(this.cursor);
     // load more words when approaching the end of the list
     if (this.cursor > this.size() - 4) {
       this.fetchWords(this.size() + 1);
