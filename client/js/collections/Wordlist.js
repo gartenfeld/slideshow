@@ -7,25 +7,24 @@ var Wordlist = Backbone.Collection.extend({
     this.loops = 1;
     this.interval = 0;
     this.init = true;
+    this.on('check', this.checkStatus, this);
     if (this.size() === 0) {
       this.fetchWords(this.cursor);
     }
-    this.on('check', this.checkStatus, this);
   },
 
   fetchWords: function(pos) {
     $.get(
       '/api/' + pos,
       function (data) {
-        var words = data.words;
-        this.addWords(words);
+        this.addWords(data.words);
       }.bind(this)
     );
   },
 
   addWords: function(words) {
     var list = this;
-    _(words).each(function (word){
+    _(words).each(function (word) {
       list.add({
         a: word.a,
         de: word.de,
