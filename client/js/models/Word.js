@@ -9,19 +9,15 @@ var Word = Backbone.Model.extend({
   },
 
   initialize: function() {
-    this.load();
-  },
-
-  load: function() {
     // initiate the sound object
     soundManager.createSound({
       id: this.get('f'),
       url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3",
-      autoLoad: false,
+      autoLoad: true,
       autoPlay: false,
-      stream: true, 
+      stream: false, 
       volume: 75
-    }).load();
+    });
   },
 
   play: function() {
