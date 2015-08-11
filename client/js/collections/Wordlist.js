@@ -22,15 +22,12 @@ var Wordlist = Backbone.Collection.extend({
   addWords: function(words) {
     var list = this;
     _(words).each(function(word) {
-      if (list.init) {
-        list.add({
-          a: word.a,
-          de: word.de,
-          en: word.en,
-          f: word.f
-        });
-      }
-
+      list.add({
+        a: word.a,
+        de: word.de,
+        en: word.en,
+        f: word.f
+      });
     });
     if (list.init) {
       list.init = false;
