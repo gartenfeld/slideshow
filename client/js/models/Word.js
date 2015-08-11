@@ -10,20 +10,18 @@ var Word = Backbone.Model.extend({
 
   initialize: function() {
     // initiate the sound object
-    var soundObj = soundManager.createSound({
+    soundManager.createSound({
       id: this.get('f'),
       url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3"
-    });
-    soundObj.load();
-    this.set('sound', soundObj);
+    }).load();
   },
 
   play: function() {
-    var soundModel = this;
-    this.get('sound').play({
+    var sound = this;
+    soundManager.play(sound.get('f'), {
       onfinish: function(){
-        soundModel.set('count', sound.get('count') + 1);
-        soundModel.trigger('check');
+        sound.set('count', sound.get('count') + 1);
+        sound.trigger('check');
       }
     });
   }
