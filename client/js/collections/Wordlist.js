@@ -15,7 +15,7 @@ var Wordlist = Backbone.Collection.extend({
     var list = this;
     $.get('/api/' + pos)
     .done(function (data) {
-      list.addWords(data.words);
+      // list.addWords(data.words);
     });
   },
 
