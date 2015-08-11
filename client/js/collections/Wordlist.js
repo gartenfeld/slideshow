@@ -15,7 +15,7 @@ var Wordlist = Backbone.Collection.extend({
     var list = this;
     $.get('/api/' + pos)
     .done(function (data) {
-      // list.addWords(data.words);
+      list.addWords(data.words);
     });
   },
 
@@ -29,10 +29,10 @@ var Wordlist = Backbone.Collection.extend({
         f: word.f
       });
     });
-    if (list.init) {
-      list.init = false;
-      list.playCurrent();
-    }
+    // if (list.init) {
+    //   list.init = false;
+    //   list.playCurrent();
+    // }
   },
 
   checkStatus: function(){
