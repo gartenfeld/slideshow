@@ -8,10 +8,11 @@ var AppView = Backbone.View.extend({
     'click .loop-plus': 'more',
     'click .loop-minus': 'less',
     'click .interval-plus': 'slower',
-    'click .interval-minus': 'faster'
+    'click .interval-minus': 'faster',
+    'click .play-pause': 'toggle'
   },
 
-  initialize: function() {
+  initialize: function () {
     this.listenTo(this.collection, 'play', this.render);
     this.renderLoops();
     this.renderInterval();
@@ -39,7 +40,7 @@ var AppView = Backbone.View.extend({
     }
   },
 
-  renderLoops: function (){
+  renderLoops: function () {
     this.$el.find('.loops').text(this.collection.loops)
       .css({ color: '#eee', opacity: 1 })
       .animate({ opacity: 0.3 }, 250);
@@ -59,13 +60,27 @@ var AppView = Backbone.View.extend({
     }
   },
 
-  renderInterval: function (){
+  renderInterval: function () {
     this.$el.find('.interval').text(this.collection.interval/1000)
       .css({ color: '#eee', opacity: 1 })
       .animate({ opacity: 0.3 }, 250);
   },
 
-  render: function() {
+  toggle: function () {
+    var currentSound = this.collection.at(this.collection.cursor),
+        soundId = currentSound.get('f'),
+        playing = soundManager.getSoundById(soundId).playState;
+    if (playing === 1) {
+      soundManager.stopAll();
+    } else {
+      this.collection.playCurrent();
+    }
+    this.$el.find('.play-pause')
+      .toggleClass("fa-pause")
+      .toggleClass("fa-play");
+  },
+
+  render: function () {
     var cursor = this.collection.cursor,
         current = this.collection.at(cursor),
         article = current.get('a') || ' ',

@@ -2,7 +2,7 @@ var Wordlist = Backbone.Collection.extend({
 
   model: Word,
 
-  initialize: function() {
+  initialize: function () {
     this.cursor = 0;
     this.loops = 1;
     this.interval = 0;
@@ -11,15 +11,16 @@ var Wordlist = Backbone.Collection.extend({
     this.fetchWords(this.cursor);
   },
 
-  fetchWords: function(pos) {
+  fetchWords: function (pos) {
     var list = this;
+    pos += 10;
     $.get('/api/' + pos)
     .done(function (data) {
       list.addWords(data.words);
     });
   },
 
-  addWords: function(words) {
+  addWords: function (words) {
     var list = this;
     _(words).each(function(word) {
       list.add({
@@ -35,7 +36,7 @@ var Wordlist = Backbone.Collection.extend({
     }
   },
 
-  checkStatus: function(){
+  checkStatus: function () {
     var current = this.at(this.cursor),
         count = current.get('count');
     if (count < this.loops) {
@@ -46,7 +47,7 @@ var Wordlist = Backbone.Collection.extend({
     }
   },
 
-  setCursor: function(offset) {
+  setCursor: function (offset) {
     if (this.cursor === 0 && offset === -1) {
       this.cursor = this.size();
     }
@@ -63,12 +64,12 @@ var Wordlist = Backbone.Collection.extend({
     this.trigger('play');
   },
 
-  next: function() {
+  next: function () {
     this.setCursor(1);
     _.delay(this.playCurrent.bind(this), this.interval);
   },
 
-  previous: function() {
+  previous: function () {
     this.setCursor(-1);
     this.playCurrent();
   }

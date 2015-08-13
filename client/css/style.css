@@ -72,10 +72,10 @@ body {
 
 .controls {
   margin: 80px auto;
-  padding: 10px 0px 0px 14px;
+  padding: 10px 0px 0px 10px;
 }
 
-.controls i {
+.fa {
   display: inline-block;
   width: 60px;
   margin: 5px;
@@ -112,4 +112,10 @@ body {
 
 .controls i:active {
   color: #ddd;
+}
+
+.list-icon {
+  position: relative;
+  top: 1px;
+  margin-right: 10px;
 }
