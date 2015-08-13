@@ -16,6 +16,15 @@ var AppView = Backbone.View.extend({
     this.listenTo(this.collection, 'play', this.render);
     this.renderLoops();
     this.renderInterval();
+    if (this.playing()) {
+      this.$el.find('.play-pause')
+        .addClass("fa-pause")
+        .removeClass("fa-play");
+    } else {
+      this.$el.find('.play-pause')
+        .addClass("fa-play")
+        .removeClass("fa-pause");
+    }
   },
 
   previous: function () {
@@ -66,18 +75,25 @@ var AppView = Backbone.View.extend({
       .animate({ opacity: 0.3 }, 250);
   },
 
-  toggle: function () {
+  playing: function () {
     var currentSound = this.collection.at(this.collection.cursor),
         soundId = currentSound.get('f'),
         playing = soundManager.getSoundById(soundId).playState;
-    if (playing === 1) {
+    return playing === 1;
+  },
+
+  toggle: function () {
+    if (this.playing()) {
       soundManager.stopAll();
+      this.$el.find('.play-pause')
+        .addClass("fa-play")
+        .removeClass("fa-pause");
     } else {
       this.collection.playCurrent();
+      this.$el.find('.play-pause')
+        .addClass("fa-pause")
+        .removeClass("fa-play");
     }
-    this.$el.find('.play-pause')
-      .toggleClass("fa-pause")
-      .toggleClass("fa-play");
   },
 
   render: function () {
