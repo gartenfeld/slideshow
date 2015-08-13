@@ -13,6 +13,8 @@ var AppView = Backbone.View.extend({
 
   initialize: function() {
     this.listenTo(this.collection, 'play', this.render);
+    this.renderLoops();
+    this.renderInterval();
   },
 
   previous: function () {
@@ -25,26 +27,42 @@ var AppView = Backbone.View.extend({
 
   more: function () { 
     if (this.collection.loops < 20 ) {
-      this.collection.loops++; 
+      this.collection.loops++;
+      this.renderLoops();
     }
   },
 
   less: function () { 
-    if (this.collection.loops > 2) {
+    if (this.collection.loops > 1) {
       this.collection.loops--;
+      this.renderLoops();
     }
   },
 
+  renderLoops: function (){
+    this.$el.find('.loops').text(this.collection.loops)
+      .css({ color: '#eee', opacity: 1 })
+      .animate({ opacity: 0.3 }, 250);
+  },
+
   slower: function () { 
-    if (this.collection.interval < 3000) {
+    if (this.collection.interval < 5000) {
       this.collection.interval += 500;
+      this.renderInterval();
     }
   },
 
   faster: function () { 
     if (this.collection.interval > 0) {
       this.collection.interval -= 500;
+      this.renderInterval();
     }
+  },
+
+  renderInterval: function (){
+    this.$el.find('.interval').text(this.collection.interval/1000)
+      .css({ color: '#eee', opacity: 1 })
+      .animate({ opacity: 0.3 }, 250);
   },
 
   render: function() {

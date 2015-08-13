@@ -10,6 +10,16 @@ html, body {
   height: 100vh;
   position: fixed;
   margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .clearfix:after {
@@ -34,7 +44,7 @@ html, body {
 }
 
 .word-container {
-  margin: 20px;
+  margin: 10px;
 }
 
 #article {
@@ -56,27 +66,50 @@ html, body {
 }
 
 .gloss {
+  margin-top: 50px;
   color: #ccc;
 }
 
 .controls {
-  margin: 100px auto;
-  padding: 10px;
+  margin: 80px auto;
+  padding: 10px 0px 0px 14px;
 }
 
-.controls a {
-  display: inline-block;;
+.controls i {
+  display: inline-block;
   width: 60px;
   margin: 5px;
   padding: 5px;
-  border-radius: 3px;
-  color: #444;
-  font-size: 70%;
-  font-weight: 400;
+  /*border-radius: 3px;*/
+  color: #333;
   text-decoration: none;
 }
 
-.controls a:hover {
-  background-color: #333;
-  color: #ccc;
+.indicator {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  width: 30px;
+  top: -5px;
+  color: #333;
+  font-family: 'Arial';
+  font-weight: bold;
+}
+
+.loops {
+  margin-left: -10px;
+  margin-right: -11px;
+}
+
+.interval {
+  margin-left: -7px;
+  margin-right: -14px;
+}
+
+.controls i:hover {
+  color: #aaa;
+}
+
+.controls i:active {
+  color: #ddd;
 }
