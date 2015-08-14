@@ -98,6 +98,7 @@ var AppView = Backbone.View.extend({
     this.$el.find('.word').text(word)
       .css({ opacity: 0 })
       .animate({ opacity: 1 }, 250);
+
     // if (this.playing()) {
     //   this.$el.find('.play-pause')
     //     .addClass("fa-pause")
@@ -107,6 +108,7 @@ var AppView = Backbone.View.extend({
     //     .addClass("fa-play")
     //     .removeClass("fa-pause");
     // }
+    
   }
 
 });

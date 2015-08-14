@@ -1,5 +1,6 @@
 // setup should be called before DOM-ready
 // http://www.schillmania.com/projects/soundmanager2/doc/#sm-config
+
 soundManager.setup({
   url: 'swf/',
   flashVersion: 9,
