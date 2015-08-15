@@ -1,30 +1,29 @@
 var Word = Backbone.Model.extend({
 
   defaults: {
-    a: '',
+    a:  '',
     de: '',
     en: '',
-    f: '',
+    f:  '',
     count: 0
   },
 
-  initialize: function() {
-    // initiate the sound object
+  initialize: function () {
     soundManager.createSound({
       id: this.get('f'),
-      // url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3"
       url: 'http://lxtr.herokuapp.com/lextra/' + this.get('f') + ".mp3"
     }).load();
   },
 
   play: function() {
-    var sound = this;
-    soundManager.play(sound.get('f'), {
-      onfinish: function(){
-        sound.set('count', sound.get('count') + 1);
-        sound.trigger('check');
-      }
+    soundManager.play(this.get('f'), {
+      onfinish: function () {
+        this.set('count', this.get('count') + 1);
+        this.trigger('check');
+      }.bind(this)
     });
   }
 
 });
+
+// url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3"

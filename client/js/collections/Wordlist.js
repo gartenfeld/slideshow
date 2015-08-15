@@ -15,14 +15,14 @@ var Wordlist = Backbone.Collection.extend({
     var list = this;
     pos += 10;
     $.get('/api/' + pos)
-    .done(function (data) {
-      list.addWords(data.words);
-    });
+      .done(function (data) {
+        list.addWords(data.words);
+      });
   },
 
   addWords: function (words) {
     var list = this;
-    _(words).each(function(word) {
+    _(words).each(function (word) {
       list.add({
         a: word.a,
         de: word.de,
@@ -30,9 +30,9 @@ var Wordlist = Backbone.Collection.extend({
         f: word.f
       });
     });
-    if (list.init) {
-      list.init = false;
-      list.playCurrent();
+    if (this.init) {
+      this.init = false;
+      this.playCurrent();
     }
   },
 
@@ -65,11 +65,13 @@ var Wordlist = Backbone.Collection.extend({
   },
 
   next: function () {
+    this.at(this.cursor).set('count', 0);
     this.setCursor(1);
     _.delay(this.playCurrent.bind(this), this.interval);
   },
 
   previous: function () {
+    this.at(this.cursor).set('count', 0);
     this.setCursor(-1);
     this.playCurrent();
   }
