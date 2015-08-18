@@ -9,16 +9,16 @@
 <body>
 
   <div id="screen">
-    <div class="stage">
 
+    <div id="stage">
       <div class="word-container">
-        <div id="article"></div>
+        <div class="article"></div>
         <div class="word">Loading...</div>
       </div>
       <div class="gloss"></div>
-
     </div>
-    <div class="controls">
+
+    <div id="controls">
       <i class="fa fa-pause fa-2x play-pause"></i>
       <i class="fa fa-chevron-circle-left fa-2x previous"></i>
       <i class="fa fa-chevron-circle-right fa-2x next"></i>
@@ -44,6 +44,8 @@
   <script src="lib/soundmanager/soundmanager2-min.js"></script>
   <script src="js/models/Word.js"></script>
   <script src="js/collections/Wordlist.js"></script>
+  <script src="js/views/StageView.js"></script>
+  <script src="js/views/ControlsView.js"></script>
   <script src="js/views/AppView.js"></script>
   <script src="js/init.js"></script>
 
