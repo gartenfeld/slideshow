@@ -9,7 +9,9 @@ var AppView = Backbone.View.extend({
     'click .loop-minus': 'less',
     'click .interval-plus': 'slower',
     'click .interval-minus': 'faster',
-    'click .play-pause': 'toggle'
+    'click .play-pause': 'toggle',
+    'click .history': 'slide',
+    'click .mask': 'slide'
   },
 
   initialize: function () {
@@ -87,6 +89,11 @@ var AppView = Backbone.View.extend({
     }
   },
 
+  slide: function () {
+    $('#mask').toggleClass("active");
+    $('#list').toggleClass("active");
+  },
+
   render: function () {
     var cursor = this.collection.cursor,
         current = this.collection.at(cursor),
@@ -97,7 +104,7 @@ var AppView = Backbone.View.extend({
     this.$el.find('.gloss').text(gloss);
     this.$el.find('.word').text(word)
       .css({ opacity: 0 })
-      .animate({ opacity: 1 }, 250);    
+      .animate({ opacity: 1 }, 250);
   }
 
 });

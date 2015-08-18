@@ -28,9 +28,15 @@
       <i class="fa fa-coffee fa-2x interval-plus"></i>
       <span class="indicator interval">0</span>
       <i class="fa fa-bolt fa-2x interval-minus"></i>
-      <i class="fa fa-list fa-2x list-icon"></i>
+      <i class="fa fa-list fa-2x history"></i>
     </div>
+
+    <div id="list" class="list"></div>
+
+    <div id="mask" class="mask"></div>
+  
   </div>
+
 
   <script src="lib/jquery/dist/jquery.min.js"></script>
   <script src="lib/underscore/underscore-min.js"></script>
@@ -42,7 +48,10 @@
   <script src="js/init.js"></script>
 
   <script>
-
+  $('#list').empty();
+  for (var i = 0; i < 31; i++) {
+    $('#list').append('<div class="list-line"><div class="line-button"><i class="fa fa-bell fa-1x"></i></div><div class="line-text">Hello</div></div>');
+  }
   </script>
 </body>
 </html>
