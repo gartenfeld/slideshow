@@ -14,8 +14,8 @@ var ControlsView = Backbone.View.extend({
   },
 
   initialize: function () {
-    this.renderLoops();
-    this.renderInterval();
+    this.render('.loops');
+    this.render('.interval');
     $('#mask').click(this.slide.bind(this));
   },
 
@@ -28,60 +28,55 @@ var ControlsView = Backbone.View.extend({
   },
 
   more: function () { 
-    if (this.collection.loops < 20 ) {
-      this.collection.loops++;
-      this.renderLoops();
-    }
+    this.collection.reloop(1);
+    this.render('.loops');
   },
 
   less: function () { 
-    if (this.collection.loops > 1) {
-      this.collection.loops--;
-      this.renderLoops();
-    }
-  },
-
-  renderLoops: function () {
-    this.$el.find('.loops').text(this.collection.loops)
-      .css({ color: '#eee', opacity: 1 })
-      .animate({ opacity: 0.3 }, 250);
+    this.collection.reloop(-1);
+    this.render('.loops');
   },
 
   slower: function () { 
-    if (this.collection.interval < 5000) {
-      this.collection.interval += 500;
-      this.renderInterval();
-    }
+    this.collection.respeed(500); 
+    this.render('.interval');
   },
 
   faster: function () { 
-    if (this.collection.interval > 0) {
-      this.collection.interval -= 500;
-      this.renderInterval();
-    }
+    this.collection.respeed(-500); 
+    this.render('.interval');
   },
 
-  renderInterval: function () {
-    this.$el.find('.interval').text(this.collection.interval/1000)
+  render: function (el) {
+    var settings = {
+      '.loops': {
+        num: this.collection.loops,
+        unit: 1
+      },
+      '.interval': {
+        num: this.collection.interval,
+        unit: 1000
+      }
+    };
+    var display = settings[el].num / settings[el].unit;
+    this.$el.find(el).text(display)
       .css({ color: '#eee', opacity: 1 })
       .animate({ opacity: 0.3 }, 250);
   },
 
   playing: function () {
-    var currentSound = this.collection.at(this.collection.cursor),
-        soundId = currentSound.get('f'),
-        playing = soundManager.getSoundById(soundId).playState;
-    return playing === 1;
+    var soundId = this.collection.current().get('f');
+    return soundManager.getSoundById(soundId).playState;
   },
 
   toggle: function () {
-    if (this.playing()) {
+    if (!!this.playing()) {
       soundManager.stopAll();
       this.$el.find('.play-pause')
         .addClass("fa-play")
         .removeClass("fa-pause");
     } else {
-      this.collection.playCurrent();
+      this.collection.present();
       this.$el.find('.play-pause')
         .addClass("fa-pause")
         .removeClass("fa-play");

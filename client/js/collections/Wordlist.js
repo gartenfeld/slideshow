@@ -3,77 +3,97 @@ var Wordlist = Backbone.Collection.extend({
   model: Word,
 
   initialize: function () {
-    this.cursor = 0;
     this.loops = 1;
     this.interval = 0;
+    this.cursor = 0;
     this.init = true;
-    this.on('check', this.checkStatus, this);
-    this.fetchWords(this.cursor);
+    this.on('boundary', this.check, this);
+    this.retrieve(this.cursor);
   },
 
-  fetchWords: function (pos) {
-    var list = this;
-    pos += 10;
+  retrieve: function (pos) {
+    pos += 10; // for testing
     $.get('/api/' + pos)
       .done(function (data) {
-        list.addWords(data.words);
-      });
+        this.include(data.words);
+      }.bind(this));
   },
 
-  addWords: function (words) {
-    var list = this;
-    _(words).each(function (word) {
-      list.add({
-        a: word.a,
-        de: word.de,
-        en: word.en,
-        f: word.f
-      });
-    });
+  include: function (words) {
+    _(words).each(this.build.bind(this));
     if (this.init) {
       this.init = false;
-      this.playCurrent();
+      this.present();
     }
   },
 
-  checkStatus: function () {
-    var current = this.at(this.cursor),
-        count = current.get('count');
-    if (count < this.loops) {
-      _.delay(this.playCurrent.bind(this), this.interval);
+  build: function (word) {
+    var model = this.add({
+      a: word.a,
+      de: word.de,
+      en: word.en,
+      f: word.f
+    });
+  },
+
+  current: function () {
+    return this.at(this.cursor);
+  },
+
+  check: function () {
+    if (this.current().get('count') < this.loops) {
+      this.resume();
     } else {
-      current.set('count', 0);
-      this.next();
+      this.proceed();
     }
   },
 
-  setCursor: function (offset) {
-    if (this.cursor === 0 && offset === -1) {
-      this.cursor = this.size();
-    }
-    this.cursor = (this.cursor + offset) % this.size();
-    // load more words when approaching the end of the list
+  repoint: function (offset) {
+    this.current().reset();
+    var i = this.cursor + offset;
+    this.cursor = i > -1 ? i % this.size() : i + this.size();
     if (this.cursor > this.size() - 4) {
-      this.fetchWords(this.size());
+      this.retrieve(this.size());
     }
   },
 
-  playCurrent: function() {
+  present: function() {
     soundManager.stopAll();
-    this.at(this.cursor).play();
+    this.current().play();
     this.trigger('play');
   },
 
+  resume: function () {
+    _.delay(this.present.bind(this), this.interval);
+  },
+
+  proceed: function () {
+    this.repoint(1);
+    this.resume();
+  },
+
   next: function () {
-    this.at(this.cursor).set('count', 0);
-    this.setCursor(1);
-    _.delay(this.playCurrent.bind(this), this.interval);
+    this.repoint(1);
+    this.present();
   },
 
   previous: function () {
-    this.at(this.cursor).set('count', 0);
-    this.setCursor(-1);
-    this.playCurrent();
+    this.repoint(-1);
+    this.present();
+  },
+
+  reloop: function (step) {
+    var prop = this.loops + step;
+    if (prop >= 1 && prop <= 20) {
+      this.loops = prop;
+    }
+  },
+
+  respeed: function (step) {
+    var prop = this.interval + step;
+    if (prop >= 0 && prop <= 5000) {
+      this.interval = prop;
+    }
   }
 
 });

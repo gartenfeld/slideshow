@@ -106,11 +106,11 @@ body {
   margin-right: -14px;
 }
 
-.controls i:hover {
+#controls i:hover {
   color: #aaa;
 }
 
-.controls i:active {
+#controls i:active {
   color: #ddd;
 }
 
