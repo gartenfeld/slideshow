@@ -6,10 +6,10 @@
 }
 
 html, body {
+  margin: 0;
   width: 100vw;
   height: 100vh;
   position: fixed;
-  margin: 0;
   box-sizing: border-box;
 }
 
@@ -34,7 +34,6 @@ body {
   height: 100%;
   position: fixed;
   background-color: #000;
-  padding: 0;
   text-align: center;
   font-family: 'Lato', sans-serif;
 }
@@ -48,18 +47,18 @@ body {
   margin: 10px;
 }
 
+.article, .word {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
 .article {
-  top: -5px;
   position: relative;
+  top: -5px;
   margin: 0 10px 0 -15px;
   color: #ccc;
   font-size: 200%;
   font-weight: 300;
-}
-
-.article, .word {
-  display: inline-block;
-  vertical-align: baseline;
 }
 
 .word {
@@ -77,7 +76,6 @@ body {
 }
 
 .fa {
-  display: inline-block;
   width: 60px;
   margin: 5px;
   padding: 5px;
@@ -117,7 +115,6 @@ body {
 .history {
   position: relative;
   top: 1px;
-  margin-right: 10px;
 }
 
 .list {
@@ -130,13 +127,16 @@ body {
   overflow-y: scroll;
   direction: rtl;
   transition: transform .2s;
+  -webkit-transition: -webkit-transform .2s; /* Safari */
   transform: translateX(-320px);
+  -webkit-transform: translateX(-320px); /* Safari */
   background-color: rgba(127, 127, 127, .2);
   padding-right: 8px;
 }
 
 .list.active {
   transform: translateX(0);
+  -webkit-transform: translateX(0); /* Safari */
 }
 
 .list-line {
@@ -159,15 +159,11 @@ body {
   font-size: 20px;
   font-weight: 300;
   text-align: right;
-
-  overflow: hidden;
+  overflow: hidden; /* truncating text */
   white-space: nowrap;
   text-overflow: ellipsis;
-
   text-decoration: line-through;
-
   padding: 7px 12px 0px 14px;
-
 }
 
 .line-button {
@@ -180,7 +176,7 @@ body {
   color: inherit;
   width: 30px;
   margin: 12px auto;
-  padding: 0px;
+  padding: 0;
 }
 
 .mask {
@@ -188,11 +184,11 @@ body {
   z-index: 10;
   top: 0;
   left: 0;
-  overflow: hidden;
   width: 0;
   height: 0;
-  background-color: #000;
   opacity: 0;
+  overflow: hidden;
+  background-color: #000;
   transition: opacity .2s, width 0s .2s, height 0s .2s;
 }
 

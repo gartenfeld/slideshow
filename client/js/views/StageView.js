@@ -7,8 +7,7 @@ var StageView = Backbone.View.extend({
   },
 
   render: function () {
-    var cursor = this.collection.cursor,
-        current = this.collection.at(cursor),
+    var current = this.collection.current(),
         article = current.get('a') || ' ',
         word = current.get('de'),
         gloss = current.get('en');
@@ -16,6 +15,7 @@ var StageView = Backbone.View.extend({
     this.$el.find('.gloss').text(gloss);
     this.$el.find('.word').text(word)
       .css({ opacity: 0 })
+      .stop().delay(250)
       .animate({ opacity: 1 }, 250);
   }
 
