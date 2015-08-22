@@ -168,6 +168,7 @@ body {
 
 .line-button {
   float: inherit;
+  /* Use relative-absolute positioning instead */
   width: 40px;
   height: 40px;
 }
