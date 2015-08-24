@@ -1,11 +1,15 @@
 var ListView = Backbone.View.extend({
 
-  initialize: function () {
+  el: '#list',
 
+  initialize: function () {
+    // this.listenTo(this.collection, 'enlist', this.insert)
   },
 
-  render: function () {
-    
+  insert: function (model) {
+    // instantiate new itemView
+    // grab return value from render
+    // add element to list
   }
 
 });

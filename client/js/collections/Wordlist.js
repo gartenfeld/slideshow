@@ -20,7 +20,9 @@ var Wordlist = Backbone.Collection.extend({
   },
 
   include: function (words) {
+    // reset tally of blocked words
     _(words).each(this.build.bind(this));
+    // decide whether to fetch again
     if (this.init) {
       this.init = false;
       this.present();
@@ -28,12 +30,14 @@ var Wordlist = Backbone.Collection.extend({
   },
 
   build: function (word) {
+    // tally count of blocked words
     var model = this.add({
       a: word.a,
       de: word.de,
       en: word.en,
       f: word.f
     });
+    // optionally load the sound file
   },
 
   current: function () {
