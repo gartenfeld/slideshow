@@ -13,7 +13,6 @@ var Word = Backbone.Model.extend({
       id: this.get('f'),
       url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3"
     }).load();
-    this.trigger('enlist', this);
   },
 
   play: function () {

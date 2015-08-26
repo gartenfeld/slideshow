@@ -7,9 +7,8 @@ var ListView = Backbone.View.extend({
   },
 
   insert: function (model) {
-    console.log('Hi!');
-    var item = new WordView({model: model}).render();
-    this.$el.prepend(item);
+    var item = new WordView({model: model});
+    this.$el.prepend(item.render());
   }
 
 });

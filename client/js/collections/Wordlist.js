@@ -8,7 +8,6 @@ var Wordlist = Backbone.Collection.extend({
     this.cursor = 0;
     this.init = true;
     this.on('boundary', this.check, this);
-    this.on('enlist', this.enlist, this);
     this.retrieve(this.cursor);
   },
 
@@ -23,7 +22,7 @@ var Wordlist = Backbone.Collection.extend({
   include: function (words) {
     // reset tally of blocked words
     _(words).each(this.build.bind(this));
-    // decide whether to fetch again
+    // if > 4 blocked, fetch again
     if (this.init) {
       this.init = false;
       this.present();
@@ -31,19 +30,15 @@ var Wordlist = Backbone.Collection.extend({
   },
 
   build: function (word) {
-    // tally count of blocked words
+    // update the count of blocked words
     var model = this.add({
       a: word.a,
       de: word.de,
       en: word.en,
       f: word.f
     });
-    // optionally load the sound file
-  },
-
-  enlist: function (model) {
-    console.log('Hi!!!');
     this.trigger('enlist', model);
+    // if word is not blocked, load sound
   },
 
   current: function () {

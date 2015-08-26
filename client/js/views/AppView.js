@@ -3,13 +3,13 @@ var AppView = Backbone.View.extend({
   el: '#screen',
 
   initialize: function () {
-    this.stage = new StageView({
+    new StageView({
       collection: this.collection
     });
-    this.controls = new ControlsView({
+    new ControlsView({
       collection: this.collection
     });
-    this.history = new ListView({
+    new ListView({
       collection: this.collection
     });
   }
