@@ -7,7 +7,7 @@ var ListView = Backbone.View.extend({
   },
 
   insert: function (model) {
-    // instantiate new itemView
+    // var lineItem = new itemView({model: model}).render()
     // grab return value from render
     // add element to list
   }
