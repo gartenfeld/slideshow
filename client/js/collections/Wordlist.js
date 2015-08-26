@@ -8,6 +8,7 @@ var Wordlist = Backbone.Collection.extend({
     this.cursor = 0;
     this.init = true;
     this.on('boundary', this.check, this);
+    this.on('enlist', this.enlist, this);
     this.retrieve(this.cursor);
   },
 
@@ -38,6 +39,11 @@ var Wordlist = Backbone.Collection.extend({
       f: word.f
     });
     // optionally load the sound file
+  },
+
+  enlist: function (model) {
+    console.log('Hi!!!');
+    this.trigger('enlist', model);
   },
 
   current: function () {

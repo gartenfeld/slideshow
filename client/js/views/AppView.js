@@ -9,6 +9,9 @@ var AppView = Backbone.View.extend({
     this.controls = new ControlsView({
       collection: this.collection
     });
+    this.history = new ListView({
+      collection: this.collection
+    });
   }
 
 });
