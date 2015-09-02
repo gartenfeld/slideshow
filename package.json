@@ -9,8 +9,11 @@
   "main": "./server/app.js",
   "dependencies": {
     "body-parser": "~1.13.2",
+    "bookshelf": "^0.8.2",
     "bower": "^1.4.1",
     "express": "~4.13.1",
-    "serve-favicon": "~2.3.0"
+    "knex": "^0.8.6",
+    "serve-favicon": "~2.3.0",
+    "sqlite3": "^3.0.10"
   }
 }
