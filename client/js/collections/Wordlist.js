@@ -15,18 +15,12 @@ var Wordlist = Backbone.Collection.extend({
     pos += 10; // for testing
     $.get('/api/' + pos)
       .done(function (data) {
-        this.include(data.words);
+        _(data.words).each(this.build.bind(this));
+        if (this.init) {
+          this.init = false;
+          this.present();
+        }
       }.bind(this));
-  },
-
-  include: function (words) {
-    // reset tally of blocked words
-    _(words).each(this.build.bind(this));
-    // if > 4 blocked, fetch again
-    if (this.init) {
-      this.init = false;
-      this.present();
-    }
   },
 
   build: function (word) {
@@ -35,7 +29,8 @@ var Wordlist = Backbone.Collection.extend({
       a: word.a,
       de: word.de,
       en: word.en,
-      f: word.f
+      f: word.f,
+      active: true
     });
     this.trigger('enlist', model);
     // if word is not blocked, load sound
@@ -43,6 +38,15 @@ var Wordlist = Backbone.Collection.extend({
 
   current: function () {
     return this.at(this.cursor);
+  },
+
+  present: function(delay) {
+    delay = delay || 0;
+    _.delay(function () {
+      soundManager.stopAll();
+      this.current().play();
+      this.trigger('play');
+    }.bind(this), delay);
   },
 
   check: function () {
@@ -53,37 +57,38 @@ var Wordlist = Backbone.Collection.extend({
     }
   },
 
-  repoint: function (offset) {
+  offset: function (step) {
+    var inquire = function (origin) {
+      var i = origin + step;
+      return i > -1 ? i % this.size() : i + this.size();
+    }.bind(this);
+    var target = inquire(this.cursor);
+    while (this.at(target).get('active') === false) {
+      target = inquire(target);
+    }
+    this.repoint(target);
+  },
+
+  repoint: function (target) {
     this.current().reset();
-    var i = this.cursor + offset;
-    this.cursor = i > -1 ? i % this.size() : i + this.size();
+    this.cursor = target;
     if (this.cursor > this.size() - 4) {
       this.retrieve(this.size());
     }
   },
 
-  present: function() {
-    soundManager.stopAll();
-    this.current().play();
-    this.trigger('play');
-  },
-
-  resume: function () {
-    _.delay(this.present.bind(this), this.interval);
-  },
-
   proceed: function () {
-    this.repoint(1);
-    this.resume();
+    this.offset(1);
+    this.present(this.interval);
   },
 
   next: function () {
-    this.repoint(1);
+    this.offset(1);
     this.present();
   },
 
   previous: function () {
-    this.repoint(-1);
+    this.offset(-1);
     this.present();
   },
 

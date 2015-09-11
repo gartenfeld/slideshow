@@ -146,8 +146,12 @@ body {
   color: #ccc;
 }
 
-.list-line:hover{
+.line-text:hover, .line-toggle:hover {
   color: #ff0066;
+}
+
+.line-text.skipped {
+  color: #333;
 }
 
 .line-text {
@@ -162,18 +166,17 @@ body {
   overflow: hidden; /* truncating text */
   white-space: nowrap;
   text-overflow: ellipsis;
-  text-decoration: line-through;
   padding: 7px 12px 0px 14px;
 }
 
-.line-button {
+.line-toggle {
   float: inherit;
   /* Use relative-absolute positioning instead */
   width: 40px;
   height: 40px;
 }
 
-.line-button i {
+.line-toggle i {
   color: inherit;
   width: 30px;
   margin: 12px auto;
