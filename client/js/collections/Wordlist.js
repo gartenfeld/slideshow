@@ -51,7 +51,7 @@ var Wordlist = Backbone.Collection.extend({
 
   check: function () {
     if (this.current().get('count') < this.loops) {
-      this.resume();
+      this.present(this.interval);
     } else {
       this.proceed();
     }
