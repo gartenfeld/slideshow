@@ -73,19 +73,19 @@ var ControlsView = Backbone.View.extend({
     if (!!this.playing()) {
       soundManager.stopAll();
       this.$el.find('.play-pause')
-        .addClass("fa-play")
-        .removeClass("fa-pause");
+        .addClass('fa-play')
+        .removeClass('fa-pause');
     } else {
       this.collection.present();
       this.$el.find('.play-pause')
-        .addClass("fa-pause")
-        .removeClass("fa-play");
+        .addClass('fa-pause')
+        .removeClass('fa-play');
     }
   },
 
   slide: function () {
-    $('#mask').toggleClass("active");
-    $('#list').toggleClass("active");
+    $('#mask').toggleClass('active');
+    $('#list').toggleClass('active');
   }
 
 });

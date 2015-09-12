@@ -33,7 +33,7 @@ var Wordlist = Backbone.Collection.extend({
       active: true
     });
     this.trigger('enlist', model);
-    // if word is not blocked, load sound
+    // load sound if word is `active`
   },
 
   current: function () {

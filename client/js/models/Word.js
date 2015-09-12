@@ -1,3 +1,5 @@
+var AUDIO_HOST = 'http://deut-rosson.rhcloud.com/lextra/';
+
 var Word = Backbone.Model.extend({
 
   defaults: {
@@ -11,7 +13,7 @@ var Word = Backbone.Model.extend({
   initialize: function () {
     soundManager.createSound({
       id: this.get('f'),
-      url: 'http://deut-rosson.rhcloud.com/lextra/' + this.get('f') + ".mp3"
+      url: AUDIO_HOST + this.get('f') + '.mp3'
     }).load();
   },
 
@@ -29,6 +31,3 @@ var Word = Backbone.Model.extend({
   }
 
 });
-
-// url: 'http://lxtr.herokuapp.com/lextra/' + this.get('f') + ".mp3"
-
