@@ -1,4 +1,4 @@
-var AUDIO_HOST = 'http://deut-rosson.rhcloud.com/lextra/';
+var AUDIO_HOST = 'https://dbx.firebaseapp.com/audio/lextra/';
 
 var Word = Backbone.Model.extend({
 
