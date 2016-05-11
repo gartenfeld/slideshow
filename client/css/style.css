@@ -125,6 +125,7 @@ body {
   width: 320px;
   height: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
   direction: rtl;
   transition: transform .2s;
   -webkit-transition: -webkit-transform .2s; /* Safari */
@@ -132,6 +133,10 @@ body {
   -webkit-transform: translateX(-320px); /* Safari */
   background-color: rgba(127, 127, 127, .2);
   padding-right: 8px;
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }
 
 .list.active {
