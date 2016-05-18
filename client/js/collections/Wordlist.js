@@ -61,15 +61,19 @@ var Wordlist = Backbone.Collection.extend({
       this.proceed();
     }
   },
+  
+  modulo: function (origin, step) {
+    var i = origin + step;
+    return i > -1 ? i % this.size() : i + this.size();
+  },
 
   offset: function (step) {
-    var inquire = function (origin) {
-      var i = origin + step;
-      return i > -1 ? i % this.size() : i + this.size();
-    }.bind(this);
-    var target = inquire(this.cursor);
+    var target = this.modulo(this.cursor, step);
     while (this.at(target).get('active') === false) {
-      target = inquire(target);
+      if (target > this.size() - 4) {
+        this.retrieve(this.size());
+      }
+      target = this.modulo(target, step);
     }
     this.repoint(target);
   },
