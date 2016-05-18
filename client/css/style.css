@@ -155,6 +155,7 @@ body {
 }
 
 .line-text {
+  cursor: pointer;
   float: inherit;
   width: 248px;
   height: 40px;

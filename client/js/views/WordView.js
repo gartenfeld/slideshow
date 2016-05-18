@@ -28,6 +28,9 @@ var WordView = Backbone.View.extend({
     var status = this.model.get('active');
     var target = this.collection.indexOf(this.model);
     this.model.set('active', !status);
+    if (Storage !== undefined) {
+      localStorage.setItem(this.model.get('f'), !status);
+    }
     if (status && target > this.collection.size() - 4) {
       this.collection.retrieve(this.collection.size());
     }

@@ -1,3 +1,10 @@
+function isActive(key) {
+  if (Storage !== undefined) {
+    return localStorage.getItem(key) !== 'false';
+  }
+  return true;
+}
+
 var Wordlist = Backbone.Collection.extend({
 
   model: Word,
@@ -12,7 +19,6 @@ var Wordlist = Backbone.Collection.extend({
   },
 
   retrieve: function (pos) {
-    pos += 10; // for testing
     $.get('/api/' + pos)
       .done(function (data) {
         _(data.words).each(this.build.bind(this));
@@ -24,16 +30,14 @@ var Wordlist = Backbone.Collection.extend({
   },
 
   build: function (word) {
-    // update the count of blocked words
     var model = this.add({
       a: word.a,
       de: word.de,
       en: word.en,
       f: word.f,
-      active: true
+      active: isActive(word.f)
     });
     this.trigger('enlist', model);
-    // load sound if word is `active`
   },
 
   current: function () {
@@ -42,10 +46,11 @@ var Wordlist = Backbone.Collection.extend({
 
   present: function(delay) {
     delay = delay || 0;
-    _.delay(function () {
+    var timer = _.delay(function () {
       soundManager.stopAll();
       this.current().play();
       this.trigger('play');
+      window.clearTimeout(timer);
     }.bind(this), delay);
   },
 

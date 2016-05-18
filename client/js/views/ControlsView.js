@@ -17,6 +17,13 @@ var ControlsView = Backbone.View.extend({
     this.render('.loops');
     this.render('.interval');
     $('#mask').click(this.slide.bind(this));
+    this.$play = this.$el.find('.play-pause');
+    this.listenTo(this.collection, 'play', this.paused);
+  },
+
+  paused: function() {
+    this.$play.addClass('fa-pause')
+      .removeClass('fa-play');
   },
 
   previous: function () {
@@ -72,14 +79,10 @@ var ControlsView = Backbone.View.extend({
   toggle: function () {
     if (!!this.playing()) {
       soundManager.stopAll();
-      this.$el.find('.play-pause')
-        .addClass('fa-play')
+      this.$play.addClass('fa-play')
         .removeClass('fa-pause');
     } else {
       this.collection.present();
-      this.$el.find('.play-pause')
-        .addClass('fa-pause')
-        .removeClass('fa-play');
     }
   },
 
