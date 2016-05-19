@@ -75,6 +75,7 @@ var Wordlist = Backbone.Collection.extend({
     while (this.at(target).get('active') === false) {
       if (target > this.size() - 4 && !this.retrieving) {
         this.retrieve(this.size());
+        this.present();
       }
       target = this.modulo(target, step);
     }
