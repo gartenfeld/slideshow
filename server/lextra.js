@@ -666,7 +666,7 @@ module.exports = [
 {"a": "", "de": "verweisen", "en": "refer", "f": "DE_1454"},
 {"a": "", "de": "wenig", "en": "few", "f": "DE_0102"},
 {"a": "", "de": "fünfundzwanzig", "en": "twenty-five", "f": "DE_3881"},
-{"a": "", "de": "Ferien", "en": "holiday, vacation", "f": "DE_2679"},
+{"a": "die", "de": "Ferien", "en": "holiday, vacation", "f": "DE_2679"},
 {"a": "", "de": "insofern", "en": "as far as that goes", "f": "DE_1262"},
 {"a": "", "de": "gefährden", "en": "endanger", "f": "DE_1999"},
 {"a": "der", "de": "Vogel", "en": "bird", "f": "DE_1880"},
