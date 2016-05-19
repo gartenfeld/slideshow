@@ -16,9 +16,11 @@ var Wordlist = Backbone.Collection.extend({
     this.init = true;
     this.on('boundary', this.check, this);
     this.retrieve(this.cursor);
+    this.retrieving = false;
   },
 
   retrieve: function (pos) {
+    this.retrieving = true;
     $.get('/api/' + pos)
       .done(function (data) {
         _(data.words).each(this.build.bind(this));
@@ -26,6 +28,7 @@ var Wordlist = Backbone.Collection.extend({
           this.init = false;
           this.present();
         }
+        this.retrieving = false;
       }.bind(this));
   },
 
@@ -70,7 +73,7 @@ var Wordlist = Backbone.Collection.extend({
   offset: function (step) {
     var target = this.modulo(this.cursor, step);
     while (this.at(target).get('active') === false) {
-      if (target > this.size() - 4) {
+      if (target > this.size() - 4 && !this.retrieving) {
         this.retrieve(this.size());
       }
       target = this.modulo(target, step);
