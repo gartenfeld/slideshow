@@ -218,7 +218,7 @@ module.exports = [
 {"a": "", "de": "national", "en": "national", "f": "DE_1008"},
 {"a": "die", "de": "Epoche", "en": "epoch", "f": "DE_3086"},
 {"a": "die", "de": "Persönlichkeit", "en": "personality, celebrity", "f": "DE_2321"},
-{"a": "", "de": "Unterlagen", "en": "documents", "f": "DE_3362"},
+{"a": "die", "de": "Unterlagen", "en": "documents", "f": "DE_3362"},
 {"a": "der", "de": "Ärger", "en": "trouble, annoyance", "f": "DE_2740"},
 {"a": "der", "de": "Schauspieler", "en": "actor", "f": "DE_2204"},
 {"a": "der", "de": "Sportler", "en": "athlete", "f": "DE_3237"},
