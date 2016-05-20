@@ -1130,7 +1130,7 @@ module.exports = [
 {"a": "", "de": "beschaffen", "en": "get (hold of)", "f": "DE_3559"},
 {"a": "die", "de": "Position", "en": "position", "f": "DE_1011"},
 {"a": "", "de": "alt", "en": "old", "f": "DE_0116"},
-{"a": "die", "de": "Party", "en": "party", "f": "DE_3638"},
+{"a": "die", "de": "Partei", "en": "party", "f": "DE_3638"},
 {"a": "die", "de": "Tasse", "en": "cup", "f": "DE_3507"},
 {"a": "", "de": "ausgleichen", "en": "even out, reconcile", "f": "DE_2745"},
 {"a": "", "de": "anderthalb", "en": "one and a half", "f": "DE_3955"},
