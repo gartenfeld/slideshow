@@ -55,12 +55,17 @@ var Wordlist = Backbone.Collection.extend({
 
   playCurrentWord: function(delay) {
     delay = delay || 0;
-    var timer = _.delay(function () {
+    var timer = _.delay(function() {
       soundManager.stopAll();
       this.getCurrentWord().play();
       this.trigger('play');
       window.clearTimeout(timer);
     }.bind(this), delay);
+  },
+
+  isPlaying: function() {
+    var soundId = this.getCurrentWord().get('f');
+    return soundManager.getSoundById(soundId).playState;
   },
 
   repeatOrNext: function() {
@@ -81,7 +86,6 @@ var Wordlist = Backbone.Collection.extend({
     while (this.at(target).get('active') === false) {
       if (target > this.size() - 4 && !this.retrieving) {
         this.fetchMoreWords(this.size());
-        this.playCurrentWord();
       }
       target = this.modulo(target, step);
     }

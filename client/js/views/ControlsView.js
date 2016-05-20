@@ -76,13 +76,8 @@ var ControlsView = Backbone.View.extend({
       .animate({ opacity: 0.3 }, 250);
   },
 
-  isPlaying: function() {
-    var soundId = this.collection.getCurrentWord().get('f');
-    return soundManager.getSoundById(soundId).playState;
-  },
-
   togglePause: function() {
-    if (this.isPlaying()) {
+    if (this.collection.isPlaying()) {
       soundManager.stopAll();
       this.showAsPaused();
     } else {

@@ -19,7 +19,10 @@ var WordView = Backbone.View.extend({
   playClickedWord: function() {
     if (this.model.get('active')) {
       var target = this.collection.indexOf(this.model);
-      this.collection.jumpToWord(target);
+      if (this.collection.cursor !== target) {
+        this.collection.jumpToWord(target);
+      }
+      soundManager.stopAll();
       this.collection.playCurrentWord();
     }
   },
