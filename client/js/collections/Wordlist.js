@@ -1,118 +1,124 @@
-function isActive(key) {
-  if (Storage !== undefined) {
-    return localStorage.getItem(key) !== 'false';
-  }
-  return true;
-}
+
 
 var Wordlist = Backbone.Collection.extend({
 
   model: Word,
 
-  initialize: function () {
+  initialize: function() {
     this.loops = 1;
     this.interval = 0;
     this.cursor = 0;
+    this.last = 0;
     this.init = true;
-    this.on('boundary', this.check, this);
-    this.retrieve(this.cursor);
+    this.on('played', this.repeatOrNext, this);
+    this.fetchMoreWords(this.last);
     this.retrieving = false;
   },
 
-  retrieve: function (pos) {
-    this.retrieving = true;
-    $.get('/api/' + pos)
-      .done(function (data) {
-        _(data.words).each(this.build.bind(this));
-        if (this.init) {
-          this.init = false;
-          this.present();
-        }
-        this.retrieving = false;
-      }.bind(this));
+  fetchMoreWords: function(pos) {
+    if (!this.retrieving) {
+      this.retrieving = true;
+      $.get('/api/' + pos)
+        .done(function (data) {
+          this.last += data.words.length;
+          _(data.words).each(this.createWordModel.bind(this));
+          if (this.init) {
+            this.init = false;
+            this.playCurrentWord();
+          }
+          this.retrieving = false;
+        }.bind(this));
+    }
   },
 
-  build: function (word) {
+  isWordPlayable: function(key) {
+    if (Storage !== undefined) {
+      return localStorage.getItem(key) !== 'false';
+    }
+    return true;
+  },
+
+  createWordModel: function(word) {
     var model = this.add({
       a: word.a,
       de: word.de,
       en: word.en,
       f: word.f,
-      active: isActive(word.f)
+      active: this.isWordPlayable(word.f)
     });
-    this.trigger('enlist', model);
+    this.trigger('add-to-list', model);
   },
 
-  current: function () {
+  getCurrentWord: function() {
     return this.at(this.cursor);
   },
 
-  present: function(delay) {
+  playCurrentWord: function(delay) {
     delay = delay || 0;
     var timer = _.delay(function () {
       soundManager.stopAll();
-      this.current().play();
+      this.getCurrentWord().play();
       this.trigger('play');
       window.clearTimeout(timer);
     }.bind(this), delay);
   },
 
-  check: function () {
-    if (this.current().get('count') < this.loops) {
-      this.present(this.interval);
+  repeatOrNext: function() {
+    if (this.getCurrentWord().get('count') < this.loops) {
+      this.playCurrentWord(this.interval);
     } else {
-      this.proceed();
+      this.playNextWord();
     }
   },
   
-  modulo: function (origin, step) {
+  modulo: function(origin, step) {
     var i = origin + step;
     return i > -1 ? i % this.size() : i + this.size();
   },
 
-  offset: function (step) {
+  findNextPlayableWord: function(step) {
     var target = this.modulo(this.cursor, step);
     while (this.at(target).get('active') === false) {
       if (target > this.size() - 4 && !this.retrieving) {
-        this.retrieve(this.size());
-        this.present();
+        this.fetchMoreWords(this.size());
+        this.playCurrentWord();
       }
       target = this.modulo(target, step);
     }
-    this.repoint(target);
+    this.jumpToWord(target);
   },
 
-  repoint: function (target) {
-    this.current().reset();
+  jumpToWord: function(target) {
+    this.getCurrentWord().resetCount();
     this.cursor = target;
     if (this.cursor > this.size() - 4) {
-      this.retrieve(this.size());
+      this.fetchMoreWords(this.size());
     }
   },
 
-  proceed: function () {
-    this.offset(1);
-    this.present(this.interval);
+  playNextWord: function() {
+    this.findNextPlayableWord(1);
+    this.playCurrentWord(this.interval);
   },
 
-  next: function () {
-    this.offset(1);
-    this.present();
+  next: function() {
+    this.findNextPlayableWord(1);
+    this.playCurrentWord();
   },
 
   previous: function () {
-    this.offset(-1);
-    this.present();
+    this.findNextPlayableWord(-1);
+    this.playCurrentWord();
   },
 
-  reloop: function (step) {
+  adjustRepetition: function(step) {
     var prop = this.loops + step;
     if (prop >= 1 && prop <= 20) {
       this.loops = prop;
     }
   },
 
-  respeed: function (step) {
+  adjustPause: function(step) {
     var prop = this.interval + step;
     if (prop >= 0 && prop <= 5000) {
       this.interval = prop;

@@ -21,12 +21,12 @@ var Word = Backbone.Model.extend({
     soundManager.play(this.get('f'), {
       onfinish: function () {
         this.set('count', this.get('count') + 1);
-        this.trigger('boundary');
+        this.trigger('played');
       }.bind(this)
     });
   },
 
-  reset: function () {
+  resetCount: function () {
     this.set('count', 0);
   }
 

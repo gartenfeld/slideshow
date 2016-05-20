@@ -5,56 +5,61 @@ var ControlsView = Backbone.View.extend({
   events: {
     'click .previous': 'previous',
     'click .next': 'next',
-    'click .loop-plus': 'more',
-    'click .loop-minus': 'less',
-    'click .interval-plus': 'slower',
-    'click .interval-minus': 'faster',
-    'click .play-pause': 'toggle',
-    'click .history': 'slide'
+    'click .loop-plus': 'repeatMore',
+    'click .loop-minus': 'repeatFewer',
+    'click .interval-plus': 'makeGapLonger',
+    'click .interval-minus': 'makeGapShorter',
+    'click .play-pause': 'togglePause',
+    'click .history': 'toggleHistory'
   },
 
   initialize: function () {
     this.render('.loops');
     this.render('.interval');
-    $('#mask').click(this.slide.bind(this));
+    $('#mask').click(this.toggleHistory.bind(this));
     this.$play = this.$el.find('.play-pause');
-    this.listenTo(this.collection, 'play', this.paused);
+    this.listenTo(this.collection, 'play', this.showAsUnpaused);
   },
 
-  paused: function() {
+  showAsUnpaused: function() {
     this.$play.addClass('fa-pause')
       .removeClass('fa-play');
   },
 
-  previous: function () {
+  showAsPaused: function() {
+    this.$play.addClass('fa-play')
+      .removeClass('fa-pause');
+  },
+
+  previous: function() {
     this.collection.previous();
   },
 
-  next: function () {
+  next: function() {
     this.collection.next();
   },
 
-  more: function () { 
-    this.collection.reloop(1);
+  repeatMore: function() {
+    this.collection.adjustRepetition(1);
     this.render('.loops');
   },
 
-  less: function () { 
-    this.collection.reloop(-1);
+  repeatFewer: function() {
+    this.collection.adjustRepetition(-1);
     this.render('.loops');
   },
 
-  slower: function () { 
-    this.collection.respeed(500); 
+  makeGapLonger: function() {
+    this.collection.adjustPause(500); 
     this.render('.interval');
   },
 
-  faster: function () { 
-    this.collection.respeed(-500); 
+  makeGapShorter: function() {
+    this.collection.adjustPause(-500); 
     this.render('.interval');
   },
 
-  render: function (el) {
+  render: function(el) {
     var settings = {
       '.loops': {
         num: this.collection.loops,
@@ -71,22 +76,21 @@ var ControlsView = Backbone.View.extend({
       .animate({ opacity: 0.3 }, 250);
   },
 
-  playing: function () {
-    var soundId = this.collection.current().get('f');
+  isPlaying: function() {
+    var soundId = this.collection.getCurrentWord().get('f');
     return soundManager.getSoundById(soundId).playState;
   },
 
-  toggle: function () {
-    if (!!this.playing()) {
+  togglePause: function() {
+    if (this.isPlaying()) {
       soundManager.stopAll();
-      this.$play.addClass('fa-play')
-        .removeClass('fa-pause');
+      this.showAsPaused();
     } else {
-      this.collection.present();
+      this.collection.playCurrentWord();
     }
   },
 
-  slide: function () {
+  toggleHistory: function() {
     $('#mask').toggleClass('active');
     $('#list').toggleClass('active');
   }

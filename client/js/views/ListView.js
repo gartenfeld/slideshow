@@ -2,11 +2,11 @@ var ListView = Backbone.View.extend({
 
   el: '#list',
 
-  initialize: function () {
-    this.listenTo(this.collection, 'enlist', this.insert);
+  initialize: function() {
+    this.listenTo(this.collection, 'add-to-list', this.addWordToCollection);
   },
 
-  insert: function (model) {
+  addWordToCollection: function(model) {
     var item = new WordView({
       model: model,
       collection: this.collection

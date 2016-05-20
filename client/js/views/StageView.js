@@ -2,12 +2,12 @@ var StageView = Backbone.View.extend({
 
   el: '#stage',
 
-  initialize: function () {
+  initialize: function() {
     this.listenTo(this.collection, 'play', this.render);
   },
 
-  render: function () {
-    var current = this.collection.current(),
+  render: function() {
+    var current = this.collection.getCurrentWord(),
         article = current.get('a') || ' ',
         word = current.get('de'),
         gloss = current.get('en');

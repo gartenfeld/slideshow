@@ -3,8 +3,8 @@ var WordView = Backbone.View.extend({
   className: 'list-line',
 
   events: {
-    'click .line-text': 'retrace',
-    'click .line-toggle': 'toggle'
+    'click .line-text': 'playClickedWord',
+    'click .line-toggle': 'toggleMuting'
   },
 
   template: _.template('<div class="line-toggle">' +
@@ -12,31 +12,28 @@ var WordView = Backbone.View.extend({
                        '</div>' + 
                        '<div class="line-text<%= strike %>"><%= word %></div>'),
 
-  initialize: function () {
+  initialize: function() {
     this.listenTo(this.model, 'change:active', this.render);
   },
 
-  retrace: function () {
+  playClickedWord: function() {
     if (this.model.get('active')) {
       var target = this.collection.indexOf(this.model);
-      this.collection.repoint(target);
-      this.collection.present();
+      this.collection.jumpToWord(target);
+      this.collection.playCurrentWord();
     }
   },
 
-  toggle: function () {
+  toggleMuting: function() {
     var status = this.model.get('active');
     var target = this.collection.indexOf(this.model);
     this.model.set('active', !status);
     if (Storage !== undefined) {
       localStorage.setItem(this.model.get('f'), !status);
     }
-    if (status && target > this.collection.size() - 4) {
-      this.collection.retrieve(this.collection.size());
-    }
   },
 
-  render: function () {
+  render: function() {
     var icon = 'bell', 
         strike = '',
         word = this.model.get('a') + ' ' + this.model.get('de');
