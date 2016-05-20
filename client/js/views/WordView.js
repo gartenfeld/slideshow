@@ -22,8 +22,7 @@ var WordView = Backbone.View.extend({
       if (this.collection.cursor !== target) {
         this.collection.jumpToWord(target);
       }
-      soundManager.stopAll();
-      this.collection.playCurrentWord();
+      this.collection.playAfterDelay();
     }
   },
 

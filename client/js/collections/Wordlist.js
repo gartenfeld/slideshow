@@ -9,6 +9,7 @@ var Wordlist = Backbone.Collection.extend({
     this.interval = 0;
     this.cursor = 0;
     this.last = 0;
+    this.timeout = 0;
     this.init = true;
     this.on('played', this.repeatOrNext, this);
     this.fetchMoreWords(this.last);
@@ -19,13 +20,19 @@ var Wordlist = Backbone.Collection.extend({
     if (!this.retrieving) {
       this.retrieving = true;
       $.get('/api/' + pos)
-        .done(function (data) {
+        .done(function(data) {
           this.last += data.words.length;
           _(data.words).each(this.createWordModel.bind(this));
           if (this.init) {
             this.init = false;
-            this.playCurrentWord();
+            this.playAfterDelay();
           }
+          this.timeout = 0;
+        }.bind(this))
+        .fail(function() {
+          this.timeout += 1;
+        }.bind(this))
+        .always(function() {
           this.retrieving = false;
         }.bind(this));
     }
@@ -53,14 +60,18 @@ var Wordlist = Backbone.Collection.extend({
     return this.at(this.cursor);
   },
 
-  playCurrentWord: function(delay) {
+  playAfterDelay: function(delay) {
     delay = delay || 0;
+    soundManager.stopAll();
     var timer = _.delay(function() {
-      soundManager.stopAll();
-      this.getCurrentWord().play();
-      this.trigger('play');
+      this.playCurrentWord();
       window.clearTimeout(timer);
     }.bind(this), delay);
+  },
+
+  playCurrentWord: function(delay) {
+    this.getCurrentWord().play();
+    this.trigger('play');
   },
 
   isPlaying: function() {
@@ -70,7 +81,7 @@ var Wordlist = Backbone.Collection.extend({
 
   repeatOrNext: function() {
     if (this.getCurrentWord().get('count') < this.loops) {
-      this.playCurrentWord(this.interval);
+      this.playAfterDelay(this.interval);
     } else {
       this.playNextWord();
     }
@@ -85,34 +96,38 @@ var Wordlist = Backbone.Collection.extend({
     var target = this.modulo(this.cursor, step);
     while (this.at(target).get('active') === false) {
       if (target > this.size() - 4 && !this.retrieving) {
-        this.fetchMoreWords(this.size());
+        this.fetchMoreWords(this.last);
       }
       target = this.modulo(target, step);
     }
-    this.jumpToWord(target);
+    if (!this.retrieving || target > this.cursor || this.timeout > 2) {
+      this.jumpToWord(target);
+    } else {
+      this.getCurrentWord().resetCount();
+    } 
   },
 
   jumpToWord: function(target) {
     this.getCurrentWord().resetCount();
     this.cursor = target;
     if (this.cursor > this.size() - 4) {
-      this.fetchMoreWords(this.size());
+      this.fetchMoreWords(this.last);
     }
   },
 
   playNextWord: function() {
     this.findNextPlayableWord(1);
-    this.playCurrentWord(this.interval);
+    this.playAfterDelay(this.interval);
   },
 
   next: function() {
     this.findNextPlayableWord(1);
-    this.playCurrentWord();
+    this.playAfterDelay();
   },
 
   previous: function () {
     this.findNextPlayableWord(-1);
-    this.playCurrentWord();
+    this.playAfterDelay();
   },
 
   adjustRepetition: function(step) {
