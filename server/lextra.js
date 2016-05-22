@@ -1142,7 +1142,7 @@ module.exports = [
 {"a": "", "de": "dringen", "en": "press, insist", "f": "DE_2896"},
 {"a": "die", "de": "Solidarität", "en": "solidarity", "f": "DE_3234"},
 {"a": "die", "de": "Stunde", "en": "hour", "f": "DE_0263"},
-{"a": "", "de": "Vorsitzende", "en": "chair person", "f": "DE_1134"},
+{"a": "der, die", "de": "Vorsitzende", "en": "chair person", "f": "DE_1134"},
 {"a": "", "de": "gestalten", "en": "shape, design", "f": "DE_1375"},
 {"a": "", "de": "italienisch", "en": "Italian", "f": "DE_1442"},
 {"a": "", "de": "laut", "en": "loud", "f": "DE_1263"},
