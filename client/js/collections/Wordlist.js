@@ -13,8 +13,7 @@ var Wordlist = Backbone.Collection.extend({
     this.fetchMoreWords(this.last);
     this.retrieving = false;
     window.setCursor = function(pos) {
-      pos = parseInt(pos) || 0;
-      this.last = pos;
+      this.last = parseInt(pos) || 0;
     }.bind(this);
   },
 
