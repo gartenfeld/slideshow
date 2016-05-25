@@ -1,5 +1,3 @@
-
-
 var Wordlist = Backbone.Collection.extend({
 
   model: Word,
