@@ -3545,7 +3545,7 @@ module.exports = [
 {"a": "", "de": "übrig", "en": "remaining, left", "f": "DE_0789_LL_übrig_Adj"},
 {"a": "das", "de": "Design", "en": "design", "f": "DE_3719_LL_Design_Sub"},
 {"a": "", "de": "vernehmen", "en": "hear, learn sth from sb", "f": "DE_3683_LL_vernehmen_Verb"},
-{"a": "", "de": "Geschwister", "en": "siblings", "f": "DE_3093_LL_Geschwister_"},
+{"a": "die", "de": "Geschwister", "en": "siblings", "f": "DE_3093_LL_Geschwister_"},
 {"a": "", "de": "erreichbar", "en": "within reach, reachable", "f": "DE_3444_LL_erreichbar_Adj"},
 {"a": "", "de": "begegnen", "en": "meet, come across", "f": "DE_1618_LL_begegnen_Verb"},
 {"a": "", "de": "physisch", "en": "physical", "f": "DE_3340_LL_physisch_Adj"},
