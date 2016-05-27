@@ -11,10 +11,13 @@ var Word = Backbone.Model.extend({
   },
 
   initialize: function () {
-    soundManager.createSound({
+    var sound = soundManager.createSound({
       id: this.get('f'),
       url: AUDIO_HOST + this.get('f') + '.mp3'
-    }).load();
+    });
+    if (this.get('active')) {
+      sound.load();
+    }
   },
 
   play: function () {
