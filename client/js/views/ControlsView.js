@@ -13,12 +13,26 @@ var ControlsView = Backbone.View.extend({
     'click .history': 'toggleHistory'
   },
 
+  keyupHandler: function(event) {
+    var keyEventMap = {
+      32: this.togglePause,
+      37: this.previous,
+      39: this.next
+    };
+    var action = keyEventMap[event.which];
+    if (typeof action === 'function') {
+      action.call(this);
+      event.preventDefault();
+    }
+  },
+
   initialize: function () {
     this.render('.loops');
     this.render('.interval');
     $('#mask').click(this.toggleHistory.bind(this));
     this.$play = this.$el.find('.play-pause');
     this.listenTo(this.collection, 'play', this.showAsUnpaused);
+    $('body').keyup(this.keyupHandler.bind(this));
   },
 
   showAsUnpaused: function() {
