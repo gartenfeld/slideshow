@@ -3545,7 +3545,7 @@ module.exports = [
 {"a": "", "de": "übrig", "en": "remaining, left", "f": "DE_0789"},
 {"a": "das", "de": "Design", "en": "design", "f": "DE_3719"},
 {"a": "", "de": "vernehmen", "en": "hear, learn sth from sb", "f": "DE_3683"},
-{"a": "", "de": "Geschwister", "en": "siblings", "f": "DE_3093"},
+{"a": "die", "de": "Geschwister", "en": "siblings", "f": "DE_3093"},
 {"a": "", "de": "erreichbar", "en": "within reach, reachable", "f": "DE_3444"},
 {"a": "", "de": "begegnen", "en": "meet, come across", "f": "DE_1618"},
 {"a": "", "de": "physisch", "en": "physical", "f": "DE_3340"},
