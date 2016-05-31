@@ -1,7 +1,10 @@
 var path = require('path');
 var express = require('express');
+var compression = require('compression');
 var app = express();
 var api = require('./handler');
+
+app.use(compression());
 
 var publicDIR = path.join(__dirname, '../client');
 var npmDIR = path.join(__dirname, '../node_modules');
