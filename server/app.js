@@ -4,7 +4,9 @@ var app = express();
 var api = require('./handler');
 
 var publicDIR = path.join(__dirname, '../client');
+var npmDIR = path.join(__dirname, '../node_modules');
 app.use(express.static(publicDIR));
+app.use('/lib', express.static(npmDIR));
 
 app.get('/', function (req, res) {
   res.redirect('app.html');

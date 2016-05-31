@@ -2,7 +2,7 @@
 // http://www.schillmania.com/projects/soundmanager2/doc/#sm-config
 
 soundManager.setup({
-  url: 'swf/',
+  url: 'lib/soundmanager2/swf/',
   flashVersion: 9,
   preferFlash: false,
   onready: function() {
