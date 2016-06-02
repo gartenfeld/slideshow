@@ -3999,4 +3999,4 @@ module.exports = [
 {"a": "das", "de": "Heim", "en": "home", "f": "DE_2616"},
 {"a": "das", "de": "Grundstück", "en": "plot of land", "f": "DE_2145"},
 {"a": "der", "de": "Franzose", "en": "Frenchman, French", "f": "DE_2828"}
-]
+];

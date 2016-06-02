@@ -1,4 +1,5 @@
-var db = require('./lextra');
+var db = require('./resorted');
+// var db = require('./lextra');
 
 module.exports = function (req, res) {
   var cursor = parseInt(req.params.position);
