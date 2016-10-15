@@ -23,7 +23,7 @@ var Wordlist = Backbone.Collection.extend({
       $.get('/api/' + pos)
         .done(function(data) {
           this.last += data.words.length;
-          _(data.words).each(this.createWordModel.bind(this));
+          data.words.forEach(this.createWordModel.bind(this));
           if (this.init) {
             this.init = false;
             this.playAfterDelay();
@@ -64,10 +64,10 @@ var Wordlist = Backbone.Collection.extend({
   playAfterDelay: function(delay) {
     delay = delay || 0;
     soundManager.stopAll();
-    var timer = _.delay(function() {
+    var timer = window.setTimeout((function() {
       this.playCurrentWord();
       window.clearTimeout(timer);
-    }.bind(this), delay);
+    }).bind(this), delay);
   },
 
   playCurrentWord: function(delay) {
