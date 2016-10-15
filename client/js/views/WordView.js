@@ -7,11 +7,6 @@ var WordView = Backbone.View.extend({
     'click .line-toggle': 'toggleMuting'
   },
 
-  template: _.template('<div class="line-toggle">' +
-                         '<i class="fa fa-<%= icon %> fa-1x"></i>' +
-                       '</div>' + 
-                       '<div class="line-text<%= strike %>"><%= word %></div>'),
-
   initialize: function() {
     this.listenTo(this.model, 'change:active', this.render);
   },
@@ -36,20 +31,15 @@ var WordView = Backbone.View.extend({
   },
 
   render: function() {
-    var icon = 'bell', 
-        strike = '',
-        word = this.model.get('a') + ' ' + this.model.get('de');
-        word = word.trim();
-    if (!this.model.get('active')) {
-      icon = 'bell-slash';
-      strike = ' skipped';
-    }
-    var entry = this.template({
-      word: word,
-      icon: icon,
-      strike: strike
-    });
-    this.$el.html(entry);
+    var isActive = this.model.get('active');
+    var icon = isActive ? 'fa-bell' : 'fa-bell-slash',
+        status = isActive ? '' : 'skipped',
+        word = (this.model.get('a') + ' ' + this.model.get('de')).trim();
+    var $toggle = $('<div class="line-toggle"></div>')
+      .append($('<i class="fa fa-1x"></i>').addClass(icon));
+    var $label = $('<div class="line-text"></div>')
+      .addClass(status).text(word);
+    this.$el.empty().append($toggle, $label);
     return this.$el;
   }
 
