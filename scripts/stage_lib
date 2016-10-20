@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Find the repo's root path
+top=$(git rev-parse --show-toplevel)
+
+# Set directory shorthands
+src=$top/node_modules
+lib=$top/client/lib
+
+# Create directory if none exists
+mkdir -p $lib
+
+echo -e "\033[0;32mCopying libraries to target directory…\033[0m"
+
+cp -v $src/jquery/dist/jquery.min.js $lib/jquery.min.js
+cp -v $src/underscore/underscore-min.js $lib/underscore.min.js
+cp -v $src/backbone/backbone-min.js $lib/backbone.min.js
+cp -v $src/soundmanager2/script/soundmanager2-nodebug-jsmin.js $lib/sm2.min.js
