@@ -48,9 +48,9 @@ var Wordlist = Backbone.Collection.extend({
 
   createWordModel: function(word) {
     var model = this.add({
-      a: word.a,
-      de: word.de,
-      en: word.en,
+      a: word.a || '',
+      de: word.d,
+      en: word.e,
       f: word.f,
       active: this.isWordPlayable(word.f)
     });

@@ -1,4 +1,4 @@
-var db = require('./resorted');
+var db = require('./lextra_lite');
 // var db = require('./lextra');
 
 module.exports = function (req, res) {

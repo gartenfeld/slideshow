@@ -1,4 +1,5 @@
 var AUDIO_HOST = 'https://dbx.firebaseapp.com/audio/lextra/';
+var FILE_PREFIX = 'DE_';
 
 var Word = Backbone.Model.extend({
 
@@ -13,7 +14,7 @@ var Word = Backbone.Model.extend({
   initialize: function () {
     var sound = soundManager.createSound({
       id: this.get('f'),
-      url: AUDIO_HOST + this.get('f') + '.mp3'
+      url: AUDIO_HOST + FILE_PREFIX + this.get('f') + '.mp3'
     });
     if (this.get('active')) {
       sound.load();
