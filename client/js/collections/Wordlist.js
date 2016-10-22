@@ -41,7 +41,7 @@ var Wordlist = Backbone.Collection.extend({
 
   isWordPlayable: function(key) {
     if (Storage !== undefined) {
-      return localStorage.getItem(key) !== 'false';
+      return localStorage.getItem('DE_' + key) !== 'false';
     }
     return true;
   },
