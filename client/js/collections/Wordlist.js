@@ -24,7 +24,7 @@ var Wordlist = Backbone.Collection.extend({
         .done(function(data) {
           this.last += data.words.length;
           data.words.forEach(this.createWordModel.bind(this));
-          if (this.init) {
+          if (this.init && !/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
             this.init = false;
             this.playAfterDelay();
           }
