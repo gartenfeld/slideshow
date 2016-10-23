@@ -10,8 +10,8 @@ var Wordlist = Backbone.Collection.extend({
     this.timeout = 0;
     this.init = true;
     this.on('played', this.repeatOrNext, this);
-    this.fetchMoreWords(this.last);
     this.retrieving = false;
+    this.fetchMoreWords(this.last);
     window.setCursor = function(pos) {
       this.last = parseInt(pos) || 0;
     }.bind(this);
