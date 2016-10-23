@@ -20,7 +20,7 @@ var Wordlist = Backbone.Collection.extend({
   fetchMoreWords: function(pos) {
     if (!this.retrieving) {
       this.retrieving = true;
-      $.get('/api/' + pos)
+      window.dataStore.get(pos)
         .done(function(data) {
           this.last += data.words.length;
           data.words.forEach(this.createWordModel.bind(this));
