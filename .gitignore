@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
 client/audio/lextra
-client/lib/
+client/lib/*
+!client/lib/analytics.js
 npm-debug.log
