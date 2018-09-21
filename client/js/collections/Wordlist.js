@@ -8,7 +8,7 @@ var Wordlist = Backbone.Collection.extend({
     this.cursor = 0;
     this.last = 0;
     this.timeout = 0;
-    this.init = true;
+    // this.init = true;
     this.on('played', this.repeatOrNext, this);
     this.retrieving = false;
     this.fetchMoreWords(this.last);
@@ -24,12 +24,12 @@ var Wordlist = Backbone.Collection.extend({
         .done(function(data) {
           this.last += data.words.length;
           data.words.forEach(this.createWordModel.bind(this));
-          if (this.init) {
-            this.init = false;
-            if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-              this.playAfterDelay();
-            }
-          }
+          // if (this.init) {
+          //   this.init = false;
+          //   if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          //     this.playAfterDelay();
+          //   }
+          // }
           this.timeout = 0;
         }.bind(this))
         .fail(function() {
